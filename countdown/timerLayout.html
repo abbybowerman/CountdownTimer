@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <title>Countdown Timer</title>
     <link rel="stylesheet" type="text/css" href="timerStyle.css" media="screen"/>
-    <script src="timer.js"></script>
 </head>
-<body>
+<body onload="getTime()">
     <div class="center">
         <h1>Countdown Timer</h1>
+        <h2 id="time"></h2>
+        <script src="timer.js"></script>
     </div>
     <div class="left">
         <p>This will be a countdown timer</p>
