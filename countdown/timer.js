@@ -1,6 +1,7 @@
 var start = document.getElementById("start");
 var stop = document.getElementById("stop");
 var timerHours = 0, timerMinutes = 0, timerSeconds = 0;
+var stopwatch = document.getElementById("stopwatch");
 
 function getTime() {
     var d = new Date();
@@ -27,7 +28,15 @@ function addSecond(){
         timerHours++;
         timerMinutes = 0;
     }
+    var textSeconds = timerSeconds;
+    var textMinutes = timerMinutes;
+    var textHours = timerHours;
     //DISPLAY TIME HERE
+    if(timerSeconds < 10) textSeconds = "0" + timerSeconds;
+    if(timerMinutes < 10) textMinutes = "0" + timerMinutes;
+    if(timerHours < 10) textHours = "0" + timerHours;
+
+    document.getElementById("stopwatch").innerHTML = textHours + ":" + textMinutes + ":" + textSeconds;
     timer();
 }
 
