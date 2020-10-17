@@ -53,7 +53,8 @@ function stop() {
 }
 
 //Function to clear stopwatch
-function clear() {
+function reset() {
+    clearTimeout(t);
     timerHours = 0;
     timerMinutes = 0;
     timerSeconds = 0;
