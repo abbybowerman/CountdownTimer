@@ -1,9 +1,11 @@
 .center{
-    margin: auto;
-    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    width: 300px;
 }
 
 .left{
     float: left;
+    text-align: left;
     width: 300px;
 }
