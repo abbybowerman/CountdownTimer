@@ -1,6 +1,8 @@
 var timerHours = 0, timerMinutes = 0, timerSeconds = 0;
 //variable to setTimeout/clearTimeout
 var t;
+var is24 = true;
+var modeButton = document.getElementById("clockMode");
 
 /**Function to get the current time*/
 function getTime() {
@@ -15,8 +17,34 @@ function getTime() {
     if(d.getMinutes() < 10){
         minutes = "0" + minutes;
     }
-    document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds;
+    if(is24){
+        document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds;
+    }else{
+        var dayNight = "AM";
+        if(hours == 0){
+            hours = 12;
+        }else if(hours > 12){
+            hours -= 12;
+            dayNight = "PM";
+        }
+        document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds + " " + dayNight;
+    }
     var t = setTimeout(getTime, 500);
+}
+
+/**Function to change format of clock*/
+function changeFormat() {
+    if(is24){
+        is24 = false;
+        modeButton.innerText = "AM/PM"
+    }else{
+        is24 = true;
+        modeButton.innerText = "24 Hour"
+    }
+}
+
+function modeChanged(){
+    changeFormat(is24);
 }
 
 /**Function to add a second to the stopwatch*/
