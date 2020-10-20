@@ -9,3 +9,10 @@
     text-align: left;
     width: 300px;
 }
+
+body{
+    background-color: black;
+    color: white;
+    border-style: solid;
+    border-color: aqua;
+}
