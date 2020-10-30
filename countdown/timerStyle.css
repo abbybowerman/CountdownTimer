@@ -10,6 +10,12 @@
     width: 300px;
 }
 
+.right{
+    float: right;
+    text-align: right;
+    width: 300px;
+}
+
 body{
     background-color: black;
     color: white;
