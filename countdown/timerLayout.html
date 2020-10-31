@@ -28,13 +28,14 @@
         <h2>Timer:</h2>
         <h2 id="timer">00:00:00</h2>
         <h3>Hours Minutes Seconds</h3>
-        <button id="addHours">+</button><button id="minusHours">-</button>
-        <button id="addMinutes">+</button><button id="minusMinutes">-</button>
-        <button id="addSeconds">+</button><button id="minusSeconds">-</button>
+        <button onclick="addHour()">+</button><button onclick="subtractHour()">-</button>
+        <button onclick="addMinute()">+</button><button onclick="subtractMinute()">-</button>
+        <button onclick="addSecondTimer()">+</button><button onclick="subtractSecondTimer()">-</button>
         <br><br>
-        <button id="startTimer">Start</button>
-        <button id="stopTimer">Stop</button>
-        <button id="clearTimer">Clear</button>
+        <button onclick="startTimer()">Start</button>
+        <button onclick="stopTimer()">Stop</button>
+        <button onclick="clearTimer()">Clear</button>
+        <h3></h3>
     </div>
 </body>
 </html>
