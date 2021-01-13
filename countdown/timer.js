@@ -1,41 +1,66 @@
-var timerHours = 0, timerMinutes = 0, timerSeconds = 0;
-let hours = 0, minutes = 0, seconds = 0;
-//variable to setTimeout/clearTimeout
-var t;
-var ti;
-var is24 = true;
-var modeButton = document.getElementById("clockMode");
+//variables to hold hours/minutes/seconds for stopwatch
+let stopwatchHours = 0, stopwatchMinutes = 0, stopwatchSeconds = 0;
+
+//variables to hold hours/minutes/seconds for timer
+let timerHours = 0, timerMinutes = 0, timerSeconds = 0;
+
+//variables to setTimeout/clearTimeout for the stopwatch/timer
+let t;
+let ti;
+
+//Sets the initial state of the clock to 24 hour format
+let is24 = true;
+let modeButton = document.getElementById("clockMode");
+
+/**********************************************************************
+ * Functions for the clock
+ *********************************************************************/
 
 /**Function to get the current time*/
 function getTime() {
-    var d = new Date();
-    var hours = d.getHours();
-    var minutes = d.getMinutes();
-    var seconds = d.getSeconds();
-    //adds zero if seconds is less than 10
+    let d = new Date();
+    //get current hours, minutes and seconds
+    let hours = d.getHours();
+    let minutes = d.getMinutes();
+    let seconds = d.getSeconds();
+
+    //adds zero to front if seconds is less than 10
     if(d.getSeconds() < 10){
         seconds = "0" + seconds;
     }
+    //adds zero to front if seconds is less than 10
     if(d.getMinutes() < 10){
         minutes = "0" + minutes;
     }
+
+    //displays time in 24 hour format
     if(is24){
         document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds;
     }else{
-        var dayNight = "AM";
-        if(hours == 0){
+        //displays time in AM/PM format
+        let dayNight = "AM";
+        //checks if it's midnight
+        if(hours === 0){
             hours = 12;
         }else if(hours > 12){
+            //if hours is greater than 12, subtract 12 and change to PM
             hours -= 12;
             dayNight = "PM";
+        }else if(hours === 12){
+            //checks if noon, doesn't subtract 12 but changes to PM
+            dayNight = "PM"
         }
+        //displays time
         document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds + " " + dayNight;
     }
-    var t = setTimeout(getTime, 500);
+    let t = setTimeout(getTime, 500);
 }
 
 /**Function to change format of clock*/
 function changeFormat() {
+    //Checks if the time is in 24 hour format
+    //Changes the text on the button to match what format the time is in
+    //The time itself is displayed in the getTime() function
     if(is24){
         is24 = false;
         modeButton.innerText = "AM/PM"
@@ -45,28 +70,33 @@ function changeFormat() {
     }
 }
 
+/**Function for when the mode button is pressed*/
 function modeChanged(){
     changeFormat(is24);
 }
 
+/**********************************************************************
+ * Functions for the stopwatch
+ *********************************************************************/
+
 /**Function to add a second to the stopwatch*/
 function addSecond(){
-    timerSeconds++;
-    if(timerSeconds >= 60){
-        timerSeconds = 0;
-        timerMinutes++;
+    stopwatchSeconds++;
+    if(stopwatchSeconds >= 60){
+        stopwatchSeconds = 0;
+        stopwatchMinutes++;
     }
-    if(timerMinutes >= 60){
-        timerHours++;
-        timerMinutes = 0;
+    if(stopwatchMinutes >= 60){
+        stopwatchHours++;
+        stopwatchMinutes = 0;
     }
-    var textSeconds = timerSeconds;
-    var textMinutes = timerMinutes;
-    var textHours = timerHours;
+    let textSeconds = stopwatchSeconds;
+    let textMinutes = stopwatchMinutes;
+    let textHours = stopwatchHours;
     //DISPLAY TIME HERE
-    if(timerSeconds < 10) textSeconds = "0" + timerSeconds;
-    if(timerMinutes < 10) textMinutes = "0" + timerMinutes;
-    if(timerHours < 10) textHours = "0" + timerHours;
+    if(stopwatchSeconds < 10) textSeconds = "0" + stopwatchSeconds;
+    if(stopwatchMinutes < 10) textMinutes = "0" + stopwatchMinutes;
+    if(stopwatchHours < 10) textHours = "0" + stopwatchHours;
 
     document.getElementById("stopwatch").innerHTML = textHours + ":" + textMinutes + ":" + textSeconds;
     timer();
@@ -77,34 +107,38 @@ function timer() {
     t = setTimeout(addSecond, 1000);
 }
 
-//Function to stop stopwatch
+/**Function to stop stopwatch*/
 function stop() {
     clearTimeout(t);
 }
 
-//Function to clear stopwatch
+/**Function to clear stopwatch*/
 function reset() {
     clearTimeout(t);
-    timerHours = 0;
-    timerMinutes = 0;
-    timerSeconds = 0;
+    stopwatchHours = 0;
+    stopwatchMinutes = 0;
+    stopwatchSeconds = 0;
     document.getElementById("stopwatch").innerHTML = "00:00:00";
 }
 
+/**********************************************************************
+ * Functions for the timer
+ *********************************************************************/
+
 function subtractSecond() {
-    if(seconds === 0 && minutes === 0 && hours === 0){
+    if(timerSeconds === 0 && timerMinutes === 0 && timerHours === 0){
         alert("Timer is done!");
         clearTimeout(ti);
     }else{
-        if(minutes === 0 && seconds === 0 && hours > 0){
-            hours--;
-            minutes = 59;
-            seconds = 59;
-        }else if(seconds === 0 && minutes > 0){
-            minutes--;
-            seconds = 59;
+        if(timerMinutes === 0 && timerSeconds === 0 && timerHours > 0){
+            timerHours--;
+            timerMinutes = 59;
+            timerSeconds = 59;
+        }else if(timerSeconds === 0 && timerMinutes > 0){
+            timerMinutes--;
+            timerSeconds = 59;
         }else{
-            seconds--;
+            timerSeconds--;
         }
         displayTimer();
         startTimer();
@@ -121,59 +155,59 @@ function stopTimer(){
 
 function clearTimer() {
     clearTimeout(ti);
-    hours = 0;
-    minutes = 0;
-    seconds = 0;
+    timerHours = 0;
+    timerMinutes = 0;
+    timerSeconds = 0;
     document.getElementById("timer").innerHTML = "00:00:00";
 }
 
 function displayTimer() {
-    let h = hours;
-    let m = minutes;
-    let s = seconds;
-    if(hours < 10) h = "0" + hours;
-    if(minutes < 10) m = "0" + minutes;
-    if(seconds < 10) s = "0" + seconds;
+    let h = timerHours;
+    let m = timerMinutes;
+    let s = timerSeconds;
+    if(timerHours < 10) h = "0" + timerHours;
+    if(timerMinutes < 10) m = "0" + timerMinutes;
+    if(timerSeconds < 10) s = "0" + timerSeconds;
 
     document.getElementById("timer").innerHTML = h + ":" + m + ":" + s;
 }
 
 function addHour(){
-    hours++;
+    timerHours++;
     displayTimer();
 }
 
 function subtractHour() {
-    if(hours !== 0){
-        hours--;
+    if(timerHours !== 0){
+        timerHours--;
         displayTimer()
     }
 }
 
 function addMinute(){
-    if(minutes !== 59) {
-        minutes++;
+    if(timerMinutes !== 59) {
+        timerMinutes++;
         displayTimer();
     }
 }
 
 function subtractMinute() {
-    if(minutes !== 0){
-        minutes--;
+    if(timerMinutes !== 0){
+        timerMinutes--;
         displayTimer()
     }
 }
 
 function addSecondTimer(){
-    if(seconds !== 59) {
-        seconds++;
+    if(timerSeconds !== 59) {
+        timerSeconds++;
         displayTimer();
     }
 }
 
 function subtractSecondTimer() {
-    if(seconds !== 0){
-        seconds--;
+    if(timerSeconds !== 0){
+        timerSeconds--;
         displayTimer()
     }
 }
