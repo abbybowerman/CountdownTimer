@@ -79,42 +79,54 @@ function modeChanged(){
  * Functions for the stopwatch
  *********************************************************************/
 
-/**Function to add a second to the stopwatch*/
+/**Function to add a second to the stopwatch when start button has been pressed*/
 function addSecond(){
+    //adds one second
     stopwatchSeconds++;
+    //Adds 1 minute if seconds = 60, resets seconds to 0
     if(stopwatchSeconds >= 60){
         stopwatchSeconds = 0;
         stopwatchMinutes++;
     }
+    //Adds 1 hour is minutes = 60, resets minutes to 0
     if(stopwatchMinutes >= 60){
         stopwatchHours++;
         stopwatchMinutes = 0;
     }
+    //strings to hold hours/minutes/seconds for display
     let textSeconds = stopwatchSeconds;
     let textMinutes = stopwatchMinutes;
     let textHours = stopwatchHours;
-    //DISPLAY TIME HERE
+
+    //Adds zero to front if hours/minutes/seconds < 10
     if(stopwatchSeconds < 10) textSeconds = "0" + stopwatchSeconds;
     if(stopwatchMinutes < 10) textMinutes = "0" + stopwatchMinutes;
     if(stopwatchHours < 10) textHours = "0" + stopwatchHours;
 
+    //displays current stopwatch time
     document.getElementById("stopwatch").innerHTML = textHours + ":" + textMinutes + ":" + textSeconds;
+
+    //Calls timer function to add second
     timer();
 }
 
-//This will cause the timer function to run every 1000 milliseconds (1 second)
+/**This will cause the timer function to run every 1000 milliseconds (1 second)*/
 function timer() {
     t = setTimeout(addSecond, 1000);
 }
 
 /**Function to stop stopwatch*/
 function stop() {
+    //stops timer from being called
     clearTimeout(t);
 }
 
 /**Function to clear stopwatch*/
 function reset() {
+    //stops timer from being called
     clearTimeout(t);
+
+    //resets stopwatch
     stopwatchHours = 0;
     stopwatchMinutes = 0;
     stopwatchSeconds = 0;
@@ -125,58 +137,79 @@ function reset() {
  * Functions for the timer
  *********************************************************************/
 
+/**Function to subtract second when start button is pressed*/
 function subtractSecond() {
+    //if hours, minutes and seconds equal 0, alert that timer is done
+    //and stop it
     if(timerSeconds === 0 && timerMinutes === 0 && timerHours === 0){
         alert("Timer is done!");
         clearTimeout(ti);
     }else{
+        //check if minutes and seconds equal 0 to subtract 1 hour
         if(timerMinutes === 0 && timerSeconds === 0 && timerHours > 0){
             timerHours--;
             timerMinutes = 59;
             timerSeconds = 59;
         }else if(timerSeconds === 0 && timerMinutes > 0){
+            //check if seconds equals 0 to subtract 1 minute
             timerMinutes--;
             timerSeconds = 59;
         }else{
+            //otherwise seconds will decrement by 1
             timerSeconds--;
         }
+        //function to display string representation of the timer
         displayTimer();
+
+        //function that causes the timer to run every second
         startTimer();
     }
 }
 
+/**Function that starts timer when button is pressed*/
 function startTimer(){
     ti = setTimeout(subtractSecond, 1000);
 }
 
+/**Function to stop timer but not reset it*/
 function stopTimer(){
     clearTimeout(ti);
 }
 
+/**Function to stop timer and reset it to 0*/
 function clearTimer() {
     clearTimeout(ti);
+
+    //set hours/minutes/seconds to 0
     timerHours = 0;
     timerMinutes = 0;
     timerSeconds = 0;
     document.getElementById("timer").innerHTML = "00:00:00";
 }
 
+/**Function to display timer on page*/
 function displayTimer() {
+    //variables to hold hours/minutes/seconds without changing the global variables
     let h = timerHours;
     let m = timerMinutes;
     let s = timerSeconds;
+
+    //adds 0 to front if hours/minutes/seconds is < 10
     if(timerHours < 10) h = "0" + timerHours;
     if(timerMinutes < 10) m = "0" + timerMinutes;
     if(timerSeconds < 10) s = "0" + timerSeconds;
 
+    //displays timer
     document.getElementById("timer").innerHTML = h + ":" + m + ":" + s;
 }
 
+/**Function to add one hour to the timer when button is pressed*/
 function addHour(){
     timerHours++;
     displayTimer();
 }
 
+/**Function to subtract one hour from the timer when button is pressed*/
 function subtractHour() {
     if(timerHours !== 0){
         timerHours--;
@@ -184,13 +217,23 @@ function subtractHour() {
     }
 }
 
+/**Function to add one minute to the timer when button is pressed*/
 function addMinute(){
+    //I thought quite a bit about this
+    //In the end I decided to have nothing happen if the user tries to add more than
+    //59 minutes. The alternative being to add one hour if the user tries to one more minute
+    //to 59 minutes.
+    //Reasoning: what if the minutes = 59, user means to subtract minute but adds instead
+    //Then minutes would be set back to 0 and the user would have to add those minutes all
+    //over again
+    //So I settled on this; I might change it if my reasoning changes
     if(timerMinutes !== 59) {
         timerMinutes++;
         displayTimer();
     }
 }
 
+/**Function to subtract one minute from the timer when button is pressed*/
 function subtractMinute() {
     if(timerMinutes !== 0){
         timerMinutes--;
@@ -198,6 +241,7 @@ function subtractMinute() {
     }
 }
 
+/**Function to add one second to the timer when button is pressed*/
 function addSecondTimer(){
     if(timerSeconds !== 59) {
         timerSeconds++;
@@ -205,6 +249,7 @@ function addSecondTimer(){
     }
 }
 
+/**Function to subtract one second from the timer when button is pressed*/
 function subtractSecondTimer() {
     if(timerSeconds !== 0){
         timerSeconds--;
