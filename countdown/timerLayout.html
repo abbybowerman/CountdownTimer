@@ -6,25 +6,23 @@
     <link rel="stylesheet" type="text/css" href="timerStyle.css" media="screen"/>
 </head>
 <body onload="getTime()">
-    <div class="center">
-        <h1>Clock, Timer and Stopwatch</h1>
-        <br>
-        <h2>Current time:</h2>
-        <h2 id="time"></h2>
-        <button id="clockMode" onclick="modeChanged()">24 Hour</button>
-        <script src="timer.js"></script>
-    </div>
-    <br>
-    <div class="center">
-        <br>
+    <div class="left">
+        <br><br><br>
         <h2>Stopwatch:</h2>
         <h2 id="stopwatch">00:00:00</h2>
         <button id="start" onclick="addSecond()">Start</button>
         <button id="stop" onclick="stop()">Stop</button>
         <button onclick="reset()">Clear</button>
     </div>
-    <br>
     <div class="center">
+        <h1>Clock, Timer and Stopwatch</h1>
+        <h2>Current time:</h2>
+        <h2 id="time"></h2>
+        <button id="clockMode" onclick="modeChanged()">24 Hour</button>
+        <script src="timer.js"></script>
+    </div>
+    <div class="right">
+        <br><br><br>
         <h2>Timer:</h2>
         <h2 id="timer">00:00:00</h2>
         <h3>Hours Minutes Seconds</h3>
@@ -35,7 +33,7 @@
         <button onclick="startTimer()">Start</button>
         <button onclick="stopTimer()">Stop</button>
         <button onclick="clearTimer()">Clear</button>
-        <h3></h3>
     </div>
+    <div style="clear: both;"></div>
 </body>
 </html>
